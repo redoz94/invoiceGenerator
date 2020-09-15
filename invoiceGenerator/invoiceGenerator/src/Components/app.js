@@ -1,9 +1,11 @@
 import React from "react";
+import LoadHomepage from "./LoadHomepage";
+import LoadCreateInvoice from "./LoadCreateInvoice";
+import LoadUpdateInvoice from "./LoadUpdateInvoice";
+import LoadAllInvoices from "./LoadAllInvoices";
+import LoadDisplayInvoice from "./LoadDisplayInvoice";
+import LoadPageNotFound from "./LoadPageNotfound";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-
-function LoadHomePage(props) {
-  return <h1>Welcome to the homepage!!!</h1>;
-}
 
 export default class App extends React.Component {
   constructor(props) {
@@ -13,9 +15,26 @@ export default class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <Route exact path="/">
-          <LoadHomePage />
-        </Route>
+        <Switch>
+          <Route exact path="/">
+            <LoadHomePage />
+          </Route>
+          <Route path="/createinvoice">
+            <LoadCreateInvoice />
+          </Route>
+          <Route path="/updateinvoice">
+            <LoadUpdateInvoice />
+          </Route>
+          <Route path="/displayinvoice">
+            <LoadDisplayInvoice />
+          </Route>
+          <Route path="/allinvoices">
+            <LoadAllInvoices />
+          </Route>
+          <Route>
+            <LoadPageNotFound />
+          </Route>
+        </Switch>
       </BrowserRouter>
     );
   }
