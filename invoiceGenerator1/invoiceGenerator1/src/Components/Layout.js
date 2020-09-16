@@ -1,5 +1,6 @@
 import React from "react";
 import CustomTextField from "./CustomTextField";
+import CustomTextArea from "./CustomTextArea";
 
 export default class Layout extends React.Component {
   constructor(props) {
@@ -9,12 +10,21 @@ export default class Layout extends React.Component {
       sellerAddress: "",
       customerName: "",
       customerAddress: "",
+      invoiceDescription: "",
     };
 
     this.textFieldsHandler = this.textFieldsHandler.bind(this);
   }
 
   textFieldsHandler(event) {
+    if (event.target.name === "invoiceDescription") {
+      this.setState({
+        invoiceDescription: event.target.value,
+      });
+
+      console.log("Invoice Description: " + this.state.invoiceDescription);
+    }
+
     if (event.target.name === "sellerName") {
       this.setState({
         sellerName: event.target.value,
@@ -47,6 +57,12 @@ export default class Layout extends React.Component {
   render() {
     return (
       <div>
+        <CustomTextArea
+          label="Invoice Description"
+          name="invoiceDescription"
+          val={this.state.invoiceDescription}
+          inputHandler={this.textFieldsHandler}
+        />
         <CustomTextField
           customId="seller-name"
           label="Customer's name"
