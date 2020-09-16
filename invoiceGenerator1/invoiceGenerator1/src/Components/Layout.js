@@ -11,12 +11,21 @@ export default class Layout extends React.Component {
       customerName: "",
       customerAddress: "",
       invoiceDescription: "",
+      termsAndConditions: "",
     };
 
     this.textFieldsHandler = this.textFieldsHandler.bind(this);
   }
 
   textFieldsHandler(event) {
+    if (event.target.name === "termsAndConditions") {
+      this.setState({
+        termsAndConditions: event.target.value,
+      });
+
+      console.log("Terms and Conditions: " + this.state.termsAndConditions);
+    }
+
     if (event.target.name === "invoiceDescription") {
       this.setState({
         invoiceDescription: event.target.value,
@@ -98,6 +107,12 @@ export default class Layout extends React.Component {
           val={this.state.customerAddress}
           inputHandler={this.textFieldsHandler}
           text="Enter the full address"
+        />
+        <CustomTextArea
+          label="Terms And Conditions"
+          name="termsAndConditions"
+          val={this.state.termsAndConditions}
+          inputHandler={this.textFieldsHandler}
         />
       </div>
     );
