@@ -3,6 +3,7 @@ import CustomTextField from "./CustomTextField";
 import CustomTextArea from "./CustomTextArea";
 import ProductsAndPrices from "./ProductsAndPricesListing";
 import FinalPrice from "./FinalPrice";
+import InputDescriptionAndPrice from "./InputDescriptionAndPrice";
 
 export default class Layout extends React.Component {
   constructor(props) {
@@ -14,6 +15,8 @@ export default class Layout extends React.Component {
       customerAddress: "",
       invoiceDescription: "",
       termsAndConditions: "",
+      descriptionVal: "",
+      priceVal: "",
       itemsListing: [
         { description: "Green skirt", price: 250 },
         { description: "Red skirt", price: 350 },
@@ -22,9 +25,30 @@ export default class Layout extends React.Component {
     };
 
     this.textFieldsHandler = this.textFieldsHandler.bind(this);
+    this.buttonClick = this.buttonClick.bind(this);
+  }
+
+  buttonClick() {
+    console.log("you want to add an item to the listing");
   }
 
   textFieldsHandler(event) {
+    if (event.target.name === "itemDescription") {
+      this.setState({
+        descriptionVal: event.target.value,
+      });
+
+      console.log("Item description: " + this.state.descriptionVal);
+    }
+
+    if (event.target.name === "itemPrice") {
+      this.setState({
+        priceVal: event.target.value,
+      });
+
+      console.log("Item price: " + this.state.priceVal);
+    }
+
     if (event.target.name === "termsAndConditions") {
       this.setState({
         termsAndConditions: event.target.value,
@@ -116,6 +140,12 @@ export default class Layout extends React.Component {
           text="Enter the full address"
         />
         <ProductsAndPrices itemsListing={this.state.itemsListing} />
+        <InputDescriptionAndPrice
+          descriptionVal={this.state.descriptionVal}
+          priceVal={this.state.priceVal}
+          customHandler={this.textFieldsHandler}
+          buttonHandler={this.buttonClick}
+        />
         <FinalPrice itemsListing={this.state.itemsListing} />
         <CustomTextArea
           label="Terms And Conditions"
