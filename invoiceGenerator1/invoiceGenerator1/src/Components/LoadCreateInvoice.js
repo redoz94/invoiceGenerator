@@ -6,9 +6,9 @@ import Layout from "./Layout";
 export default function LoadCreateInvoice(props) {
   return (
     <Jumbotron>
-      <Card>
+      <Card bg="dark" text="white">
         <Card.Header as="h1">Create Invoice Form</Card.Header>
-        <Card.Body>
+        <Card.Body style={{ color: "black" }}>
           <Layout />
         </Card.Body>
       </Card>

@@ -2,6 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
 import CustomTextField from "./CustomTextField";
 import CustomTextArea from "./CustomTextArea";
 import ProductsAndPrices from "./ProductsAndPricesListing";
@@ -11,6 +12,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { json } from "body-parser";
 import DailogWindow from "./DialogWindow";
+import CustomCard from "./CustomCard";
 
 export default class Layout extends React.Component {
   constructor(props) {
@@ -178,87 +180,102 @@ export default class Layout extends React.Component {
         <Container>
           <Row style={{ marginTop: "1em" }}>
             <Col>
-              <CustomTextArea
-                label="Invoice Description"
-                name="invoiceDescription"
-                val={this.state.invoiceDescription}
-                inputHandler={this.textFieldsHandler}
-              />
+              <CustomCard head="Invoice Description">
+                <CustomTextArea
+                  label="Invoice Description"
+                  name="invoiceDescription"
+                  val={this.state.invoiceDescription}
+                  inputHandler={this.textFieldsHandler}
+                />
+              </CustomCard>
             </Col>
           </Row>
           <Row style={{ marginTop: "1em" }}>
             <Col>
-              <CustomTextField
-                customId="seller-name"
-                label="seller's name"
-                placeholder="Type in the name. . ."
-                name="sellerName"
-                val={this.state.sellerName}
-                inputHandler={this.textFieldsHandler}
-                text="Enter the full name"
-              />
-              <CustomTextField
-                customId="seller-address"
-                label="seller's address"
-                placeholder="Type in the address. . ."
-                name="sellerAddress"
-                val={this.state.sellerAddress}
-                inputHandler={this.textFieldsHandler}
-                text="Enter the full address "
-              />
+              <CustomCard head="Customer's Information">
+                <CustomTextField
+                  customId="customer-name"
+                  label="Customer's name"
+                  placeholder="Type in the full name. . ."
+                  name="customerName"
+                  val={this.state.customerName}
+                  inputHandler={this.textFieldsHandler}
+                  text="Enter the customer name"
+                />
+                <CustomTextField
+                  customId="customer-name"
+                  label="Customer's address"
+                  placeholder="Type in the name. . ."
+                  name="customerAddress"
+                  val={this.state.customerAddress}
+                  inputHandler={this.textFieldsHandler}
+                  text="Enter the full address"
+                />
+              </CustomCard>
+              <CustomCard head="Seller's Information">
+                <CustomTextField
+                  customId="seller-name"
+                  label="seller's name"
+                  placeholder="Type in the name. . ."
+                  name="sellerName"
+                  val={this.state.sellerName}
+                  inputHandler={this.textFieldsHandler}
+                  text="Enter the full name"
+                />
+                <CustomTextField
+                  customId="seller-address"
+                  label="seller's address"
+                  placeholder="Type in the address. . ."
+                  name="sellerAddress"
+                  val={this.state.sellerAddress}
+                  inputHandler={this.textFieldsHandler}
+                  text="Enter the full address "
+                />
+              </CustomCard>
             </Col>
+            <Col></Col>
+          </Row>
+          <Row style={{ marginTop: "1em" }}>
             <Col>
-              <CustomTextField
-                customId="customer-name"
-                label="Customer's name"
-                placeholder="Type in the full name. . ."
-                name="customerName"
-                val={this.state.customerName}
-                inputHandler={this.textFieldsHandler}
-                text="Enter the customer name"
-              />
-              <CustomTextField
-                customId="customer-name"
-                label="Customer's address"
-                placeholder="Type in the name. . ."
-                name="customerAddress"
-                val={this.state.customerAddress}
-                inputHandler={this.textFieldsHandler}
-                text="Enter the full address"
-              />
+              <CustomCard head="items and services purchased">
+                <ProductsAndPrices itemsListing={this.state.itemsListing} />
+                <InputDescriptionAndPrice
+                  descriptionVal={this.state.descriptionVal}
+                  priceVal={this.state.priceVal}
+                  customHandler={this.textFieldsHandler}
+                  buttonHandler={this.buttonClick}
+                />
+              </CustomCard>
             </Col>
           </Row>
           <Row style={{ marginTop: "1em" }}>
             <Col>
-              <ProductsAndPrices itemsListing={this.state.itemsListing} />
-              <InputDescriptionAndPrice
-                descriptionVal={this.state.descriptionVal}
-                priceVal={this.state.priceVal}
-                customHandler={this.textFieldsHandler}
-                buttonHandler={this.buttonClick}
-              />
+              <CustomCard head="Final Price">
+                <FinalPrice itemsListing={this.state.itemsListing} />
+              </CustomCard>
             </Col>
           </Row>
           <Row style={{ marginTop: "1em" }}>
             <Col>
-              <FinalPrice itemsListing={this.state.itemsListing} />
+              <CustomCard head="Terms and Conditions">
+                <CustomTextArea
+                  label="Terms And Conditions"
+                  name="termsAndConditions"
+                  val={this.state.termsAndConditions}
+                  inputHandler={this.textFieldsHandler}
+                />
+              </CustomCard>
             </Col>
           </Row>
           <Row style={{ marginTop: "1em" }}>
             <Col>
-              <CustomTextArea
-                label="Terms And Conditions"
-                name="termsAndConditions"
-                val={this.state.termsAndConditions}
-                inputHandler={this.textFieldsHandler}
-              />
-            </Col>
-          </Row>
-          <Row style={{ marginTop: "1em" }}>
-            <Col>
-              <Button type="submit" variant="primary" size="lg">
-                Create a sales invoice
-              </Button>
+              <Card>
+                <Card.Body>
+                  <Button type="submit" variant="primary" size="lg">
+                    Create a sales invoice
+                  </Button>
+                </Card.Body>
+              </Card>
             </Col>
           </Row>
         </Container>
