@@ -15,11 +15,37 @@ export default class Layout extends React.Component {
   }
 
   textFieldsHandler(event) {
-    this.setState({
-      val: event.target.value,
-    });
+    if (event.target.name === "sellerName") {
+      this.setState({
+        sellerName: event.target.value,
+      });
 
-    console.log("Text Field: " + this.state.val);
+      console.log("Seller Name: " + this.state.val);
+    }
+
+    if (event.target.name === "sellerAddress") {
+      this.setState({
+        sellerAddress: event.target.value,
+      });
+
+      console.log("Seller Address: " + this.state.sellerAddress);
+    }
+
+    if (event.target.name === "customerName") {
+      this.setState({
+        customerName: event.target.value,
+      });
+
+      console.log("Customer Name: " + this.state.customerName);
+    }
+
+    if (event.target.name === "customerAddress") {
+      this.setState({
+        customerAddress: event.target.value,
+      });
+
+      console.log("Customer Address: " + this.state.customerAddress);
+    }
   }
 
   render() {
@@ -34,7 +60,7 @@ export default class Layout extends React.Component {
           inputHandler={this.textFieldsHandler}
           text="Enter the full name..."
         />
-        ,
+
         <CustomTextField
           customId="seller-address"
           label="Seller's Address"
@@ -44,7 +70,7 @@ export default class Layout extends React.Component {
           inputHandler={this.textFieldsHandler}
           text="Enter the full address..."
         />
-        ,
+
         <CustomTextField
           customId="customer-name"
           label="Customer's Name"
@@ -54,7 +80,7 @@ export default class Layout extends React.Component {
           inputHandler={this.textFieldsHandler}
           text="Enter the full name..."
         />
-        ,
+
         <CustomTextField
           customId="customer-address"
           label="Customer's address"
