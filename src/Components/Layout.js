@@ -1,5 +1,7 @@
 import React from "react";
 import CustomTextField from "./CustomTextField.js";
+import CustomTextArea from "./CustomTextArea.js";
+import ProductsAndPrices from "./ProductsAndPricesListing.js";
 
 export default class Layout extends React.Component {
   constructor(props) {
@@ -9,18 +11,41 @@ export default class Layout extends React.Component {
       sellerAddress: "",
       customerName: "",
       customerAddress: "",
+      invoiceDescription: "",
+      termsAndConditions: "",
+      itemsListing: [
+        { description: "Green skirt", price: 250 },
+        { description: "Red skirt", price: 350 },
+        { description: "Blue skirt", price: 450 },
+      ],
     };
 
     this.textFieldsHandler = this.textFieldsHandler.bind(this);
   }
 
   textFieldsHandler(event) {
+    if (event.target.name === "termsAndConditions") {
+      this.setState({
+        termsAndConditions: event.target.value,
+      });
+
+      console.log("Terms and Conditions: " + this.state.termsAndConditions);
+    }
+
+    if (event.target.name === "invoiceDescription") {
+      this.setState({
+        invoiceDescription: event.target.value,
+      });
+
+      console.log("Invoice Description: " + this.state.invoiceDescription);
+    }
+
     if (event.target.name === "sellerName") {
       this.setState({
         sellerName: event.target.value,
       });
 
-      console.log("Seller Name: " + this.state.val);
+      console.log("Seller Name: " + this.state.value);
     }
 
     if (event.target.name === "sellerAddress") {
@@ -51,6 +76,12 @@ export default class Layout extends React.Component {
   render() {
     return (
       <div>
+        <CustomTextArea
+          label="Invoice Description"
+          name="invoiceDescription"
+          val={this.state.invoiceDescription}
+          inputHandler={this.textFieldsHandler}
+        />
         <CustomTextField
           customId="seller-name"
           label="Seller's Name"
@@ -89,6 +120,13 @@ export default class Layout extends React.Component {
           val={this.state.customerAddress}
           inputHandler={this.textFieldsHandler}
           text="Enter the full customer address..."
+        />
+        <ProductsAndPrices itemsListing={this.state.itemsListing} />
+        <CustomTextArea
+          label="Terms  and Conditions"
+          name="termsAndConditions"
+          val={this.state.TermsAndConditions}
+          inputHandler={this.textFieldsHandler}
         />
       </div>
     );
