@@ -4,6 +4,8 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import ProductsAndPrices from "./ProductsAndPricesListing.js";
+import ButtonToInvoicesListing from "./ButtonToAllInvoicesListing";
 
 export default class DisplayInvoice extends React.Component {
   constructor(props) {
@@ -88,8 +90,8 @@ export default class DisplayInvoice extends React.Component {
             Sales Invoice
           </Card.Header>
           <Card.Body>
-            <Container>
-              <Row>
+            <Container style={{ fontSize: "1.3em" }}>
+              <Row style={{ marginTop: "1.2em" }}>
                 <Col style={{ textAlign: "right", color: "white" }}>
                   <h5>Seller's Name and Address</h5>
                   <p>
@@ -99,7 +101,7 @@ export default class DisplayInvoice extends React.Component {
                   </p>
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ marginTop: "1.2em" }}>
                 <Col style={{ textAlign: "left", color: "white" }}>
                   <h5>Customer's name and Address</h5>
                   <p>
@@ -113,28 +115,37 @@ export default class DisplayInvoice extends React.Component {
                   <p>
                     {this.state.invoiceId}
                     <br />
-                    {this.state.date}
+                    {new Date(this.state.date).toLocaleString()}
                   </p>
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ marginTop: "1.2em" }}>
                 <Col style={{ textAlign: "left", color: "white" }}>
                   <h5>Invoice Description</h5>
+                  <p>{this.state.invoiceDescription}</p>
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ marginTop: "1.2em" }}>
                 <Col style={{ textAlign: "left", color: "white" }}>
                   <h5>Items and/or Services purchased</h5>
+                  <ProductsAndPrices itemsListing={this.state.itemsListing} />
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ marginTop: "1.2em" }}>
                 <Col style={{ textAlign: "left", color: "white" }}>
                   <h5>Final Price</h5>
+                  <p>${this.state.finalPrice}</p>
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ marginTop: "1.2em" }}>
                 <Col style={{ textAlign: "left", color: "white" }}>
                   <h5>Terms and Conditions</h5>
+                  <p>{this.state.termsAndConditions}</p>
+                </Col>
+              </Row>
+              <Row style={{ marginTop: "1.2em" }}>
+                <Col>
+                  <ButtonToInvoicesListing />
                 </Col>
               </Row>
             </Container>

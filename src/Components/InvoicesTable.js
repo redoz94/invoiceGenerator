@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ViewInvoiceButton from "./ViewInvoiceButton.js";
+import UpdateInvoiceButton from "./ButtonUpdateInvoice";
 
 export default class InvoicesTable extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ export default class InvoicesTable extends React.Component {
                 Delete
               </Button>
               <ViewInvoiceButton invoiceId={invoice.id} />
+              <UpdateInvoiceButton invoiceId={invoice.id} />
             </ButtonGroup>
           </Col>
         </Row>

@@ -1,5 +1,9 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 export default function LoadUpdateInvoice(props) {
-  return <h1>Welcome to the update invoice form!!!</h1>;
+  const { invoiceId } = useParams();
+  //Saving the URL parameter invoiceId
+
+  return <h1>You want to update the invoice with the ID:{invoiceId}!!!</h1>;
 }

@@ -22,7 +22,7 @@ export default class App extends React.Component {
           <Route path="/createinvoice">
             <LoadCreateInvoice />
           </Route>
-          <Route path="/updateinvoice">
+          <Route path="/updateinvoice/:invoiceId">
             <LoadUpdateInvoice />
           </Route>
           <Route path="/displayinvoice/:invoiceId">
