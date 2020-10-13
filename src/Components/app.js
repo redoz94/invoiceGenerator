@@ -25,7 +25,7 @@ export default class App extends React.Component {
           <Route path="/updateinvoice">
             <LoadUpdateInvoice />
           </Route>
-          <Route path="/displayinvoice">
+          <Route path="/displayinvoice/:invoiceId">
             <LoadDisplayInvoice />
           </Route>
           <Route path="/allinvoices">
