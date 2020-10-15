@@ -12,7 +12,6 @@ import CustomTextField from "./CustomTextField.js";
 import ProductsAndPrices from "./ProductsAndPricesListing.js";
 import DescriptionAndPrice from "./InputDescriptionAndPrice.js";
 import FinalPrice from "./FinalPrice.js";
-import DialogBox from "./DialogWindow.js";
 
 export default class UpdateInvoice extends React.Component {
   constructor(props) {
@@ -30,21 +29,11 @@ export default class UpdateInvoice extends React.Component {
       finalPrice: "",
       descriptionVal: "",
       priceVal: "",
-      show: false,
-      title: "",
-      content: "",
     };
 
     this.textFieldsHandler = this.textFieldsHandler.bind(this);
     this.buttonClick = this.buttonClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.closeWindow = this.closeWindow.bind(this);
-  }
-
-  closeWindow() {
-    this.setState({
-      show: false,
-    });
   }
 
   buttonClick() {
@@ -92,21 +81,9 @@ export default class UpdateInvoice extends React.Component {
         }
       })
       .then((responseAsJson) => {
-        this.setState({
-          show: true,
-          title: "SUCCESS!!!",
-          content: "The information was updated successfully!!!",
-        });
-
         console.log("SUCCESS!!!");
       })
       .catch(() => {
-        this.setState({
-          show: true,
-          title: "ERROR!!!",
-          content: "Problems when updating the information!!!",
-        });
-
         console.log("ERROR when updating!!!");
       });
   }
@@ -339,12 +316,6 @@ export default class UpdateInvoice extends React.Component {
                       <Card.Body>
                         <Button type="submit" variant="primary" size="lg">
                           Update Invoice
-                          <DialogBox
-                            show={this.state.show}
-                            title={this.state.tile}
-                            content={this.state.content}
-                            closeHandler={this.state.closeWindow}
-                          />
                         </Button>
                       </Card.Body>
                     </Card>
