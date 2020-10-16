@@ -288,7 +288,7 @@ export default class Layout extends React.Component {
         </Container>
 
         <DialogBox
-          show={this.state.show}
+          show={this.props.show}
           title={this.state.tile}
           content={this.state.content}
           closeHandler={this.state.closeWindow}

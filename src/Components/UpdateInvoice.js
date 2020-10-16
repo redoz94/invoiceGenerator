@@ -12,6 +12,7 @@ import CustomTextField from "./CustomTextField.js";
 import ProductsAndPrices from "./ProductsAndPricesListing.js";
 import DescriptionAndPrice from "./InputDescriptionAndPrice.js";
 import FinalPrice from "./FinalPrice.js";
+import DialogBox from "./DialogWindow.js";
 
 export default class UpdateInvoice extends React.Component {
   constructor(props) {
@@ -26,14 +27,23 @@ export default class UpdateInvoice extends React.Component {
       invoiceDescription: "",
       termsAndConditions: "",
       itemsListing: [],
-      finalPrice: "",
       descriptionVal: "",
       priceVal: "",
+      show: false,
+      title: "",
+      content: "",
     };
 
     this.textFieldsHandler = this.textFieldsHandler.bind(this);
     this.buttonClick = this.buttonClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.closeWindow = this.closeWindow.bind(this);
+  }
+
+  closeWindow() {
+    this.setState({
+      show: false,
+    });
   }
 
   buttonClick() {
@@ -53,6 +63,12 @@ export default class UpdateInvoice extends React.Component {
   }
 
   handleSubmit(event) {
+    const currentItems = this.state.itemsListing;
+    let finalPrice = 0;
+    currentItems.map((product, index) => {
+      finalPrice = finalPrice + product.price;
+    });
+
     const data = {
       sellerName: this.state.sellerName,
       sellerAddress: this.state.sellerAddress,
@@ -61,7 +77,7 @@ export default class UpdateInvoice extends React.Component {
       invoiceDescription: this.state.invoiceDescription,
       terms: this.state.terms,
       items: this.state.itemsListing,
-      finalPrice: this.state.finalPrice,
+      finalPrice: finalPrice,
     };
 
     fetch("/api/updateinvoice/" + this.props.invoiceId, {
@@ -81,11 +97,25 @@ export default class UpdateInvoice extends React.Component {
         }
       })
       .then((responseAsJson) => {
+        this.setState({
+          show: true,
+          title: "SUCCESS!!!",
+          content: "The information was updated successfully!!!",
+        });
+
         console.log("SUCCESS!!!");
       })
       .catch(() => {
+        this.setState({
+          show: true,
+          title: "ERROR!!!",
+          content: "Problems when updating the information!!!",
+        });
         console.log("ERROR when updating!!!");
       });
+
+    event.preventDefault();
+    //prevents webpage from reloading
   }
 
   textFieldsHandler(event) {
@@ -322,6 +352,12 @@ export default class UpdateInvoice extends React.Component {
                   </Col>
                 </Row>
               </Container>
+              <DialogBox
+                show={this.props.show}
+                title={this.state.tile}
+                content={this.state.content}
+                closeHandler={this.state.closeWindow}
+              />
             </Form>
           </Card.Body>
         </Card>
