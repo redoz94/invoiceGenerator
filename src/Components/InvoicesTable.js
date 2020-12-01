@@ -1,11 +1,12 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ViewInvoiceButton from "./ViewInvoiceButton.js";
-import UpdateInvoiceButton from "./ButtonUpdateInvoice";
+import UpdateInvoiceButton from "./ButtonUpdateInvoice.js";
+import ButtonToHomepage from "./ButtonToHomePage";
 
 export default class InvoicesTable extends React.Component {
   constructor(props) {
@@ -13,12 +14,12 @@ export default class InvoicesTable extends React.Component {
   }
 
   render() {
-    const idsAndDescriptions = this.props.invoicesData;
-    let htmlMarkup = [];
+    const idsAndDescription = this.props.invoicesData;
+    let htmlMarkUp = [];
 
-    idsAndDescriptions.map((invoice, index) => {
-      htmlMarkup.push(
-        <Row key={"index-" + index}>
+    idsAndDescription.map((invoice, index) => {
+      htmlMarkUp.push(
+        <Row key={"index- " + index}>
           <Col>
             <h5>{invoice.id}</h5>
           </Col>
@@ -46,7 +47,7 @@ export default class InvoicesTable extends React.Component {
       <Container>
         <Row>
           <Col>
-            <h4>Invoice Id</h4>
+            <h4>Invoice ID</h4>
           </Col>
           <Col>
             <h4>Description</h4>
@@ -55,7 +56,8 @@ export default class InvoicesTable extends React.Component {
             <h4>Actions</h4>
           </Col>
         </Row>
-        {htmlMarkup}
+        {htmlMarkUp}
+        <ButtonToHomepage />
       </Container>
     );
   }

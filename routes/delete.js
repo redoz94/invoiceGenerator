@@ -1,8 +1,9 @@
+//dependencies
 const express = require("express");
 const router = express.Router();
 const invoiceModel = require("../models/invoice.js");
 
-//routes
+//Routes
 router.delete("/:invoiceId", (request, response) => {
   invoiceModel.deleteOne(
     {
@@ -10,21 +11,19 @@ router.delete("/:invoiceId", (request, response) => {
     },
     (err) => {
       if (err) {
-        //problems when removing the invoice
-        console.log("ERR " + err);
+        //Something went wrong with deleting the invoice
+        console.log("ERROR " + err);
         response
           .status(500)
-          .json({ message: "problems when removing the invoice" });
+          .json({ message: "Problems when deleting the invoice" });
       } else {
         //everything is working
-        console.log("The invoice was removed from Mongodb");
-        response
-          .status(200)
-          .json({ message: "The invoice was removed from MongoDB" });
+        console.log("The invoice was deleted");
+        response.status(200).json({ message: "The invoice was deleted." });
       }
     }
   );
 });
 
-//exporting the contents of this file
+//exporting the contents
 module.exports = router;

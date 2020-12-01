@@ -6,6 +6,7 @@ export default class CustomTextArea extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <InputGroup>

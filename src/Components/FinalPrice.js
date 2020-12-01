@@ -17,11 +17,10 @@ export default class FinalPrice extends React.Component {
     });
     return (
       <Container>
-        <Row>
-          <Col>
-            <h4>${finalPrice}</h4>
-          </Col>
-        </Row>
+        <Row></Row>
+        <Col>
+          <h4>${finalPrice}</h4>
+        </Col>
       </Container>
     );
   }

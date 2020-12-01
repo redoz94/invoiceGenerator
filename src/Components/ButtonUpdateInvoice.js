@@ -11,7 +11,7 @@ export default function ButtonUpdateInvoice(props) {
 
   return (
     <Button variant="primary" onClick={handleClick}>
-      Update invoice
+      Update Invoice
     </Button>
   );
 }

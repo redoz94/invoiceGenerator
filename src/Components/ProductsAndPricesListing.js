@@ -14,7 +14,7 @@ export default class ProductsAndPrices extends React.Component {
 
     items.map((product, index) => {
       htmlMarkup.push(
-        <Row key={" index - " + index}>
+        <Row key={"index- " + index}>
           <Col>{product.description}</Col>
           <Col>${product.price}</Col>
         </Row>

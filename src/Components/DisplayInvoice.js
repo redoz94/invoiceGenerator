@@ -4,13 +4,12 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ProductsAndPrices from "./ProductsAndPricesListing.js";
-import ButtonToInvoicesListing from "./ButtonToAllInvoicesListing";
+import ProductsAndPrices from "./ProductsAndPricesListing";
+import ButtonAllInvoices from "./ButtonToInvoicesListing.js";
 
 export default class DisplayInvoice extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       fetchError: false,
       sellerName: "",
@@ -27,7 +26,7 @@ export default class DisplayInvoice extends React.Component {
   }
 
   componentDidMount() {
-    //runs automatically
+    //Runs automatically
     fetch("/api/readinvoice/" + this.props.invoiceId, {
       method: "GET",
     })
@@ -36,7 +35,7 @@ export default class DisplayInvoice extends React.Component {
           //everything is working
           return response.json();
         } else {
-          //problems when reading info from mongodb
+          //problems when reading information from mongodb
           throw new Error();
         }
       })
@@ -53,7 +52,7 @@ export default class DisplayInvoice extends React.Component {
           date: responseAsJson.date,
           invoiceId: responseAsJson._id,
         });
-        console.log("The information was read from mongodb!!!");
+        console.log("The information was read from mongodb");
       })
       .catch(() => {
         this.setState({
@@ -65,7 +64,7 @@ export default class DisplayInvoice extends React.Component {
 
   render() {
     if (this.state.fetchError) {
-      //if something goes wrong when reading the info from MongoDB
+      //If something goes wrong when reading info from mongodb
       return (
         <Jumbotron>
           <Card bg="dark" text="white">
@@ -74,7 +73,7 @@ export default class DisplayInvoice extends React.Component {
             </Card.Header>
             <Card.Body>
               <h2>
-                Error!!! Something went wrong, when reading the information from
+                ERROR: Something went wrong when reading information from
                 MongoDB
               </h2>
             </Card.Body>
@@ -82,7 +81,6 @@ export default class DisplayInvoice extends React.Component {
         </Jumbotron>
       );
     }
-
     return (
       <Jumbotron>
         <Card bg="dark" text="white">
@@ -93,7 +91,7 @@ export default class DisplayInvoice extends React.Component {
             <Container style={{ fontSize: "1.3em" }}>
               <Row style={{ marginTop: "1.2em" }}>
                 <Col style={{ textAlign: "right", color: "white" }}>
-                  <h5>Seller's Name and Address</h5>
+                  <h5>Seller's name and Address</h5>
                   <p>
                     {this.state.sellerName}
                     <br />
@@ -103,7 +101,7 @@ export default class DisplayInvoice extends React.Component {
               </Row>
               <Row style={{ marginTop: "1.2em" }}>
                 <Col style={{ textAlign: "left", color: "white" }}>
-                  <h5>Customer's name and Address</h5>
+                  <h5>Customer's Name and Address</h5>
                   <p>
                     {this.state.customerName}
                     <br />
@@ -111,7 +109,7 @@ export default class DisplayInvoice extends React.Component {
                   </p>
                 </Col>
                 <Col style={{ textAlign: "right", color: "white" }}>
-                  <h5>Invoice Id and Date</h5>
+                  <h5>Invoice ID and Date</h5>
                   <p>
                     {this.state.invoiceId}
                     <br />
@@ -127,7 +125,7 @@ export default class DisplayInvoice extends React.Component {
               </Row>
               <Row style={{ marginTop: "1.2em" }}>
                 <Col style={{ textAlign: "left", color: "white" }}>
-                  <h5>Items and/or Services purchased</h5>
+                  <h5>Items/Services purchased</h5>
                   <ProductsAndPrices itemsListing={this.state.itemsListing} />
                 </Col>
               </Row>
@@ -145,7 +143,7 @@ export default class DisplayInvoice extends React.Component {
               </Row>
               <Row style={{ marginTop: "1.2em" }}>
                 <Col>
-                  <ButtonToInvoicesListing />
+                  <ButtonAllInvoices />
                 </Col>
               </Row>
             </Container>

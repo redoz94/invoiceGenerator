@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-//Mongoose schema
+//mongoose schema
 const customSchema = new mongoose.Schema({
   sellerName: {
     type: String,
@@ -38,11 +38,11 @@ const customSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  terms: {
+  invoiceDescription: {
     type: String,
     required: true,
   },
-  invoiceDescription: {
+  terms: {
     type: String,
     required: true,
   },

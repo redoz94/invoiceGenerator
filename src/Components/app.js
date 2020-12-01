@@ -1,8 +1,8 @@
 import React from "react";
-import LoadHomePage from "./LoadHomePage";
 import LoadCreateInvoice from "./LoadCreateInvoice.js";
-import LoadUpdateInvoice from "./LoadUpdateInvoice.js";
-import LoadDisplayInvoice from "./LoadDisplayInvoice.js";
+import LoadUpdateinvoice from "./LoadUpdateinvoice";
+import LoadDisplayinvoice from "./LoadDisplayinvoices.js";
+import LoadHomepage from "./LoadHomepage.js";
 import LoadAllInvoices from "./LoadAllInvoices.js";
 import LoadPageNotFound from "./LoadPageNotFound.js";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -17,16 +17,16 @@ export default class App extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <LoadHomePage />
+            <LoadHomepage />
           </Route>
           <Route path="/createinvoice">
             <LoadCreateInvoice />
           </Route>
           <Route path="/updateinvoice/:invoiceId">
-            <LoadUpdateInvoice />
+            <LoadUpdateinvoice />
           </Route>
           <Route path="/displayinvoice/:invoiceId">
-            <LoadDisplayInvoice />
+            <LoadDisplayinvoice />
           </Route>
           <Route path="/allinvoices">
             <LoadAllInvoices />
@@ -35,9 +35,6 @@ export default class App extends React.Component {
             <LoadPageNotFound />
           </Route>
         </Switch>
-        <Route exact path="/">
-          <LoadHomePage />
-        </Route>
       </BrowserRouter>
     );
   }

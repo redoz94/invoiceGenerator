@@ -1,25 +1,22 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const {
-  cleanWebpackPlugin,
-  CleanWebpackPlugin,
-} = require("clean-webpack-plugin");
+const htmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  //configuration used by webpack
-  mode: "development",
+  //Config used by webpack
+  mode: "production",
   entry: {
     app: "./src/index.js",
   },
   module: {
     rules: [
-      { test: /\.(js|jsx)$/, use: ["babel-loader"] },
+      { test: /\.(js||jsx)$/, use: ["babel-loader"] },
       { test: /\.(css)$/, use: ["style-loader", "css-loader"] },
     ],
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
+    new htmlWebpackPlugin({
       title: "Invoice Generator",
       template: "./src/template.ejs",
       filename: "invoice.html",

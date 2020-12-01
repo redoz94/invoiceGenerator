@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-export default class DialogBox extends React.Component {
+export default class DialogWindow extends React.Component {
   constructor(props) {
     super(props);
   }

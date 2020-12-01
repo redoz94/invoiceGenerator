@@ -1,18 +1,21 @@
 import React from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import CustomCard from "./CustomCard.js";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import CustomCard from "./CustomCard";
 import CustomTextArea from "./CustomTextArea.js";
 import CustomTextField from "./CustomTextField.js";
 import ProductsAndPrices from "./ProductsAndPricesListing.js";
 import DescriptionAndPrice from "./InputDescriptionAndPrice.js";
 import FinalPrice from "./FinalPrice.js";
-import DialogBox from "./DialogWindow.js";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import DialogWindow from "./DialogWindow";
+import ButtonAllInvoices from "./ButtonToInvoicesListing.js";
+import ButtonToInvoicesListing from "./ButtonToInvoicesListing.js";
 
 export default class UpdateInvoice extends React.Component {
   constructor(props) {
@@ -33,7 +36,6 @@ export default class UpdateInvoice extends React.Component {
       title: "",
       content: "",
     };
-
     this.textFieldsHandler = this.textFieldsHandler.bind(this);
     this.buttonClick = this.buttonClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,6 +65,7 @@ export default class UpdateInvoice extends React.Component {
   }
 
   handleSubmit(event) {
+    //final price
     const currentItems = this.state.itemsListing;
     let finalPrice = 0;
     currentItems.map((product, index) => {
@@ -75,7 +78,7 @@ export default class UpdateInvoice extends React.Component {
       customerName: this.state.customerName,
       customerAddress: this.state.customerAddress,
       invoiceDescription: this.state.invoiceDescription,
-      terms: this.state.terms,
+      terms: this.state.termsAndConditions,
       items: this.state.itemsListing,
       finalPrice: finalPrice,
     };
@@ -89,33 +92,32 @@ export default class UpdateInvoice extends React.Component {
     })
       .then((response) => {
         if (response.ok) {
-          //the information was updated
+          //The information was updated
           return response.json();
         } else {
-          //Problems when updating the information
+          //Problems
           throw new Error();
         }
       })
       .then((responseAsJson) => {
         this.setState({
           show: true,
-          title: "SUCCESS!!!",
-          content: "The information was updated successfully!!!",
+          title: "SUCCESS!",
+          content: "The information was updated successfully",
         });
-
         console.log("SUCCESS!!!");
       })
       .catch(() => {
         this.setState({
           show: true,
-          title: "ERROR!!!",
+          title: "ERROR!",
           content: "Problems when updating the information!!!",
         });
-        console.log("ERROR when updating!!!");
+        console.log("Error when updating!");
       });
 
     event.preventDefault();
-    //prevents webpage from reloading
+    //Prevents webpage from reloading
   }
 
   textFieldsHandler(event) {
@@ -123,7 +125,6 @@ export default class UpdateInvoice extends React.Component {
       this.setState({
         descriptionVal: event.target.value,
       });
-
       console.log("Item Description: " + this.state.descriptionVal);
     }
 
@@ -131,7 +132,6 @@ export default class UpdateInvoice extends React.Component {
       this.setState({
         priceVal: event.target.value,
       });
-
       console.log("Item Price: " + this.state.priceVal);
     }
 
@@ -139,15 +139,13 @@ export default class UpdateInvoice extends React.Component {
       this.setState({
         termsAndConditions: event.target.value,
       });
-
-      console.log("Terms and Conditions: " + this.state.termsAndConditions);
+      console.log("Terms And Conditions: " + this.state.termsAndConditions);
     }
 
     if (event.target.name === "invoiceDescription") {
       this.setState({
         invoiceDescription: event.target.value,
       });
-
       console.log("Invoice Description: " + this.state.invoiceDescription);
     }
 
@@ -155,15 +153,13 @@ export default class UpdateInvoice extends React.Component {
       this.setState({
         sellerName: event.target.value,
       });
-
-      console.log("Seller Name: " + this.state.value);
+      console.log("Seller Name: " + this.state.sellerName);
     }
 
     if (event.target.name === "sellerAddress") {
       this.setState({
         sellerAddress: event.target.value,
       });
-
       console.log("Seller Address: " + this.state.sellerAddress);
     }
 
@@ -171,16 +167,14 @@ export default class UpdateInvoice extends React.Component {
       this.setState({
         customerName: event.target.value,
       });
-
-      console.log("Customer Name: " + this.state.customerName);
+      console.log("customer name: " + this.state.customerName);
     }
 
     if (event.target.name === "customerAddress") {
       this.setState({
         customerAddress: event.target.value,
       });
-
-      console.log("Customer Address: " + this.state.customerAddress);
+      console.log("customer address: " + this.state.customerAddress);
     }
   }
 
@@ -194,7 +188,7 @@ export default class UpdateInvoice extends React.Component {
           //everything is working
           return response.json();
         } else {
-          //something went wrong when reading the information
+          //if something goes wrong
           throw new Error();
         }
       })
@@ -207,9 +201,9 @@ export default class UpdateInvoice extends React.Component {
           invoiceDescription: responseAsJson.invoiceDescription,
           termsAndConditions: responseAsJson.terms,
           itemsListing: responseAsJson.items,
-          finalPrice: responseAsJson.finalPrice,
+          finalPrice: finalPrice,
         });
-        console.log("The info was read");
+        console.log("The information was read");
       })
       .catch(() => {
         this.setState({
@@ -221,7 +215,7 @@ export default class UpdateInvoice extends React.Component {
 
   render() {
     if (this.state.fetchError) {
-      //if something goes wrong, this message displays
+      //If something goes wrong when reading the information from the database
       return (
         <Jumbotron>
           <Card bg="dark" text="white">
@@ -229,9 +223,125 @@ export default class UpdateInvoice extends React.Component {
               Update Invoice
             </Card.Header>
             <Card.Body style={{ color: "black" }}>
-              <h1>
-                ERROR: Problems when reading the information from the Database.
-              </h1>
+              <Form onSubmit={this.handleSubmit}>
+                <Container>
+                  <Row style={{ marginTop: "1em" }}>
+                    <Col>
+                      <CustomCard head="Invoice Description">
+                        <CustomTextArea
+                          label="Invoice Description"
+                          name="invoiceDescription"
+                          val={this.state.invoiceDescription}
+                          inputHandler={this.textFieldsHandler}
+                        />
+                      </CustomCard>
+                    </Col>
+                  </Row>
+
+                  <Row style={{ marginTop: "1em" }}>
+                    <Col>
+                      <CustomCard head="Seller's information">
+                        <CustomTextField
+                          customId="seller-name"
+                          name="sellerName"
+                          label="Seller's name"
+                          placeholder="Type in the name"
+                          val={this.state.sellerName}
+                          inputHandler={this.textFieldsHandler}
+                          text="Enter the full name"
+                        />
+
+                        <CustomTextField
+                          customId="seller-address"
+                          name="sellerAddress"
+                          label="Seller's address"
+                          placeholder="Type in the address"
+                          val={this.state.sellerAddress}
+                          inputHandler={this.textFieldsHandler}
+                          text="Enter the full address"
+                        />
+                      </CustomCard>
+                    </Col>
+                    <Col>
+                      <CustomCard head="Customer's Information">
+                        <CustomTextField
+                          customId="customer-name"
+                          name="customerName"
+                          label="Customer's name"
+                          placeholder="Type in the name"
+                          val={this.state.customerName}
+                          inputHandler={this.textFieldsHandler}
+                          text="Enter the full name"
+                        />
+
+                        <CustomTextField
+                          customId="customer-address"
+                          name="customerAddress"
+                          label="Customer's address"
+                          placeholder="Type in the address"
+                          val={this.state.customerAddress}
+                          inputHandler={this.textFieldsHandler}
+                          text="Enter the full address"
+                        />
+                      </CustomCard>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "1em" }}>
+                    <Col>
+                      <CustomCard head="Items/Services purchased">
+                        <ProductsAndPrices
+                          itemsListing={this.state.itemsListing}
+                        />
+                        <DescriptionAndPrice
+                          descriptionVal={this.state.descriptionVal}
+                          priceVal={this.state.priceVal}
+                          customHandler={this.textFieldsHandler}
+                          buttonHandler={this.buttonClick}
+                        />
+                      </CustomCard>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "1em" }}>
+                    <Col>
+                      <CustomCard head="Final Price">
+                        <FinalPrice itemsListing={this.state.itemsListing} />
+                      </CustomCard>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "1em" }}>
+                    <Col>
+                      <CustomCard head="Terms And Conditions">
+                        <CustomTextArea
+                          label="Terms and Conditions"
+                          name="termsAndConditions"
+                          val={this.state.termsAndConditions}
+                          inputHandler={this.textFieldsHandler}
+                        />
+                      </CustomCard>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "1em" }}>
+                    <Col>
+                      <Card>
+                        <Card.Body>
+                          <ButtonGroup>
+                            <Button type="submit" variant="primary" size="lg">
+                              Update Invoice
+                            </Button>
+                            <ButtonToInvoicesListing />
+                          </ButtonGroup>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </Row>
+                </Container>
+                <DialogWindow
+                  show={this.state.show}
+                  title={this.state.title}
+                  content={this.state.content}
+                  closeHandler={this.closeWindow}
+                />
+              </Form>
             </Card.Body>
           </Card>
         </Jumbotron>
@@ -243,123 +353,7 @@ export default class UpdateInvoice extends React.Component {
           <Card.Header as="h3" style={{ textAlign: "center" }}>
             Update Invoice
           </Card.Header>
-          <Card.Body>
-            <Form onSubmit={this.handleSubmit}>
-              <Container>
-                <Row style={{ marginTop: "1em", color: "black" }}>
-                  <Col>
-                    <CustomCard head="Invoice Description">
-                      <CustomTextArea
-                        label="Invoice Description"
-                        name="invoiceDescription"
-                        val={this.state.invoiceDescription}
-                        inputHandler={this.textFieldsHandler}
-                      />
-                    </CustomCard>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "1em", color: "black" }}>
-                  <Col>
-                    <CustomCard head="Sellers Information">
-                      <CustomTextField
-                        customId="seller-name"
-                        label="Seller's Name"
-                        placeholder="Type in the name..."
-                        name="sellerName"
-                        val={this.state.sellerName}
-                        inputHandler={this.textFieldsHandler}
-                        text="Enter the full name..."
-                      />
-
-                      <CustomTextField
-                        customId="seller-address"
-                        label="Seller's Address"
-                        placeholder="Type in the Address..."
-                        name="sellerAddress"
-                        val={this.state.sellerAddress}
-                        inputHandler={this.textFieldsHandler}
-                        text="Enter the full address..."
-                      />
-                    </CustomCard>
-                  </Col>
-                  <Col>
-                    <CustomCard head="Customer's information">
-                      <CustomTextField
-                        customId="customer-name"
-                        label="Customer's Name"
-                        placeholder="Type in the name..."
-                        name="customerName"
-                        val={this.state.customerName}
-                        inputHandler={this.textFieldsHandler}
-                        text="Enter the full name..."
-                      />
-
-                      <CustomTextField
-                        customId="customer-address"
-                        label="Customer's address"
-                        placeholder="Type in the name..."
-                        name="customerAddress"
-                        val={this.state.customerAddress}
-                        inputHandler={this.textFieldsHandler}
-                        text="Enter the full customer address..."
-                      />
-                    </CustomCard>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "1em" }} style={{ color: "black" }}>
-                  <Col>
-                    <CustomCard head="Items/Services purchased">
-                      <ProductsAndPrices
-                        itemsListing={this.state.itemsListing}
-                      />
-                      <DescriptionAndPrice
-                        descriptionVal={this.state.descriptionVal}
-                        priceVal={this.state.priceVal}
-                        customHandler={this.textFieldsHandler}
-                        buttonHandler={this.buttonClick}
-                      />
-                    </CustomCard>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "1em", color: "black" }}>
-                  <Col>
-                    <CustomCard head="Final Price">
-                      <FinalPrice itemsListing={this.state.itemsListing} />
-                    </CustomCard>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "1em", color: "black" }}>
-                  <Col>
-                    <CustomCard head="Terms and Conditions">
-                      <CustomTextArea
-                        label="Terms  and Conditions"
-                        name="termsAndConditions"
-                        val={this.state.termsAndConditions}
-                        inputHandler={this.textFieldsHandler}
-                      />
-                    </CustomCard>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: "1em", color: "black" }}>
-                  <Col>
-                    <Card>
-                      <Card.Body>
-                        <Button type="submit" variant="primary" size="lg">
-                          Update Invoice
-                        </Button>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                </Row>
-              </Container>
-              <DialogBox
-                show={this.props.show}
-                title={this.state.tile}
-                content={this.state.content}
-                closeHandler={this.state.closeWindow}
-              />
-            </Form>
-          </Card.Body>
+          <Card.Body>ID: {this.props.invoiceId}</Card.Body>
         </Card>
       </Jumbotron>
     );

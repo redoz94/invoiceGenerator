@@ -1,6 +1,7 @@
 import React from "react";
+import { render } from "react-dom";
 import InvoicesTable from "./InvoicesTable.js";
-import DialogBox from "./DialogWindow.js";
+import DialogWindow from "./DialogWindow.js";
 
 export default class InvoicesListing extends React.Component {
   constructor(props) {
@@ -13,8 +14,8 @@ export default class InvoicesListing extends React.Component {
       content: "",
     };
 
-    this.closeWindow = this.closeWindow.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
+    this.closeWindow = this.closeWindow.bind(this);
   }
 
   closeWindow() {
@@ -28,62 +29,61 @@ export default class InvoicesListing extends React.Component {
       method: "DELETE",
     }).then((response) => {
       if (response.ok) {
-        //the invoice was removed
+        //Everything was ok
         this.setState({
           show: true,
           title: "SUCCESS!!!",
-          content: "The invoice was removed successfully",
+          content: "The invoice was removed, successfully...",
         });
 
         const invoicesCopy = this.state.invoicesData;
-
-        //Removing id and description
+        //Removing id and descriptions
         this.state.invoicesData.map((item, index) => {
           if (item.id === invoiceId) {
-            //Removing the invoice from the listing on the screen
+            //Removing invoice from the listing on the screen
             invoicesCopy.splice(index, 1);
             this.setState({
               invoicesData: invoicesCopy,
             });
+          } else {
           }
         });
       } else {
-        //something went wrong
+        //If there's something wrong
         this.setState({
           show: true,
-          title: "ERROR!!!",
-          content: "Problems when removing the invoice.",
+          title: "ERRORRRR!!!",
+          content: "Problems when removing the invoice...",
         });
       }
     });
-    console.log("You want to delete invoice " + invoiceId);
+    console.log("You want to delete invoice: " + invoiceId);
   }
 
   componentDidMount() {
-    //This method runs automatically one time
+    //This runs automatically
     fetch("/api/readinvoice/all", {
       method: "GET",
     })
       .then((response) => {
         if (response.ok) {
-          //Everything is working
+          //If everythings ok
           return response.json();
           console.log(response.json());
         } else {
-          //if everything is not working
+          //If somethings not working
+
           console.log("Problems when reading the information");
         }
       })
       .then((responseAsJson) => {
         let invoicesInfo = [];
-
         responseAsJson.map((invoice, index) => {
           invoicesInfo.push({
             id: invoice._id,
             description: invoice.invoiceDescription,
           });
         });
-
         this.setState((state, props) => {
           return {
             invoicesData: state.invoicesData.concat(invoicesInfo),
@@ -101,11 +101,11 @@ export default class InvoicesListing extends React.Component {
           invoicesData={this.state.invoicesData}
           handleDelete={this.deleteHandler}
         />
-        <DialogBox
+        <DialogWindow
           show={this.state.show}
-          title={this.state.tile}
+          title={this.state.title}
           content={this.state.content}
-          closeHandler={this.state.closeWindow}
+          closeHandler={this.closeWindow}
         />
       </div>
     );

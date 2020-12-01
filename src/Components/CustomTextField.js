@@ -1,5 +1,6 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
+import { FormGroup } from "react-bootstrap";
 
 export default class CustomTextField extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ export default class CustomTextField extends React.Component {
 
   render() {
     return (
-      <Form.Group controlId={this.props.customId}>
+      <FormGroup controlId={this.props.customId}>
         <Form.Label>
           <h5>{this.props.label}</h5>
         </Form.Label>
@@ -20,7 +21,7 @@ export default class CustomTextField extends React.Component {
           onChange={this.props.inputHandler}
         ></Form.Control>
         <Form.Text>{this.props.text}</Form.Text>
-      </Form.Group>
+      </FormGroup>
     );
   }
 }

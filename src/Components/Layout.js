@@ -1,17 +1,19 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-import CustomTextField from "./CustomTextField.js";
+import Card from "react-bootstrap/Card";
+import CustomTextField from "./CustomTextField";
 import CustomTextArea from "./CustomTextArea.js";
 import ProductsAndPrices from "./ProductsAndPricesListing.js";
 import FinalPrice from "./FinalPrice.js";
 import DescriptionAndPrice from "./InputDescriptionAndPrice.js";
 import Button from "react-bootstrap/Button";
-import DialogBox from "./DialogWindow";
 import Form from "react-bootstrap/Form";
+import DialogWindow from "./DialogWindow.js";
 import CustomCard from "./CustomCard.js";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import ButtonToHomepage from "./ButtonToHomePage";
 
 export default class Layout extends React.Component {
   constructor(props) {
@@ -26,35 +28,31 @@ export default class Layout extends React.Component {
       descriptionVal: "",
       priceVal: "",
       itemsListing: [],
-      show: false,
-      title: "",
-      content: "",
     };
-
     this.textFieldsHandler = this.textFieldsHandler.bind(this);
-    this.buttonClick = this.buttonClick.bind(this);
+    this.buttonHandler = this.buttonHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.closeWindow = this.closeWindow.bind(this);
   }
+
+  buttonHandler() {}
 
   closeWindow() {
     this.setState({
       show: false,
     });
-
-    console.log("You want to close this dialogue box.");
+    console.log("You want to close this dialogbox");
   }
 
   handleSubmit(event) {
-    //Final price
-
+    //final price
     const currentItems = this.state.itemsListing;
     let finalPrice = 0;
     currentItems.map((product, index) => {
       finalPrice = finalPrice + product.price;
     });
 
-    //Sales invoice information
+    //Sales Invoice
     const salesInvoice = {
       sellerName: this.state.sellerName,
       sellerAddress: this.state.sellerAddress,
@@ -74,21 +72,21 @@ export default class Layout extends React.Component {
       },
     }).then((response) => {
       if (response.ok) {
-        //if everything is working
+        //If everything is working
         this.setState({
           show: true,
-          title: "Success!!!",
-          content: "The Invoice was created successfully",
+          title: "SUCCESS!!!",
+          content: "The invoice was created successfully",
         });
-        console.log("The invoice was saved");
+        console.log("The Invoice was saved");
       } else {
-        //If something wrong happens
+        //When something wrong happens
         this.setState({
           show: true,
-          title: "Error!!!",
-          content: "Problems when creating the invoice, try it again!",
+          title: "ERROR!!!",
+          content: "Problems when creating the invoice, try again",
         });
-        console.log("problems when saving the invoice");
+        console.log("Problems when saving the invoice");
       }
     });
 
@@ -117,7 +115,6 @@ export default class Layout extends React.Component {
       this.setState({
         descriptionVal: event.target.value,
       });
-
       console.log("Item Description: " + this.state.descriptionVal);
     }
 
@@ -125,7 +122,6 @@ export default class Layout extends React.Component {
       this.setState({
         priceVal: event.target.value,
       });
-
       console.log("Item Price: " + this.state.priceVal);
     }
 
@@ -133,15 +129,13 @@ export default class Layout extends React.Component {
       this.setState({
         termsAndConditions: event.target.value,
       });
-
-      console.log("Terms and Conditions: " + this.state.termsAndConditions);
+      console.log("Terms And Conditions: " + this.state.termsAndConditions);
     }
 
     if (event.target.name === "invoiceDescription") {
       this.setState({
         invoiceDescription: event.target.value,
       });
-
       console.log("Invoice Description: " + this.state.invoiceDescription);
     }
 
@@ -149,15 +143,13 @@ export default class Layout extends React.Component {
       this.setState({
         sellerName: event.target.value,
       });
-
-      console.log("Seller Name: " + this.state.value);
+      console.log("Seller Name: " + this.state.sellerName);
     }
 
     if (event.target.name === "sellerAddress") {
       this.setState({
         sellerAddress: event.target.value,
       });
-
       console.log("Seller Address: " + this.state.sellerAddress);
     }
 
@@ -165,16 +157,14 @@ export default class Layout extends React.Component {
       this.setState({
         customerName: event.target.value,
       });
-
-      console.log("Customer Name: " + this.state.customerName);
+      console.log("customer name: " + this.state.customerName);
     }
 
     if (event.target.name === "customerAddress") {
       this.setState({
         customerAddress: event.target.value,
       });
-
-      console.log("Customer Address: " + this.state.customerAddress);
+      console.log("customer address: " + this.state.customerAddress);
     }
   }
 
@@ -196,48 +186,48 @@ export default class Layout extends React.Component {
           </Row>
           <Row style={{ marginTop: "1em" }}>
             <Col>
-              <CustomCard head="Sellers Information">
+              <CustomCard head="Seller's information">
                 <CustomTextField
                   customId="seller-name"
-                  label="Seller's Name"
-                  placeholder="Type in the name..."
                   name="sellerName"
+                  label="Seller's name"
+                  placeholder="Type in the name"
                   val={this.state.sellerName}
                   inputHandler={this.textFieldsHandler}
-                  text="Enter the full name..."
+                  text="Enter the full name"
                 />
 
                 <CustomTextField
                   customId="seller-address"
-                  label="Seller's Address"
-                  placeholder="Type in the Address..."
                   name="sellerAddress"
+                  label="Seller's address"
+                  placeholder="Type in the address"
                   val={this.state.sellerAddress}
                   inputHandler={this.textFieldsHandler}
-                  text="Enter the full address..."
+                  text="Enter the full address"
                 />
               </CustomCard>
             </Col>
             <Col>
-              <CustomCard head="Customer's information">
+              <CustomCard head="Customer's Information">
                 <CustomTextField
                   customId="customer-name"
-                  label="Customer's Name"
-                  placeholder="Type in the name..."
                   name="customerName"
+                  label="Customer's name"
+                  placeholder="Type in the name"
                   val={this.state.customerName}
                   inputHandler={this.textFieldsHandler}
-                  text="Enter the full name..."
+                  text="Enter the full name"
                 />
 
                 <CustomTextField
                   customId="customer-address"
-                  label="Customer's address"
-                  placeholder="Type in the name..."
                   name="customerAddress"
+                  label="Customer's address"
+                  placeholder="Type in the address"
                   val={this.state.customerAddress}
                   inputHandler={this.textFieldsHandler}
-                  text="Enter the full customer address..."
+                  text="Enter the full address"
                 />
               </CustomCard>
             </Col>
@@ -264,9 +254,9 @@ export default class Layout extends React.Component {
           </Row>
           <Row style={{ marginTop: "1em" }}>
             <Col>
-              <CustomCard head="Terms and Conditions">
+              <CustomCard head="Terms And Conditions">
                 <CustomTextArea
-                  label="Terms  and Conditions"
+                  label="Terms and Conditions"
                   name="termsAndConditions"
                   val={this.state.TermsAndConditions}
                   inputHandler={this.textFieldsHandler}
@@ -278,20 +268,22 @@ export default class Layout extends React.Component {
             <Col>
               <Card>
                 <Card.Body>
-                  <Button type="submit" variant="primary" size="lg">
-                    Create a Sales Invoice
-                  </Button>
+                  <ButtonGroup>
+                    <Button type="submit" variant="primary" size="lg">
+                      Create a sales Invoice
+                    </Button>
+                    <ButtonToHomepage />
+                  </ButtonGroup>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
         </Container>
-
-        <DialogBox
-          show={this.props.show}
-          title={this.state.tile}
+        <DialogWindow
+          show={this.state.show}
+          title={this.state.title}
           content={this.state.content}
-          closeHandler={this.state.closeWindow}
+          closeHandler={this.closeWindow}
         />
       </Form>
     );

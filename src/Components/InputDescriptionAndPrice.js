@@ -1,11 +1,12 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import CustomTextField from "./CustomTextField";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import { render } from "react-dom";
+import CustomTextField from "./CustomTextField";
 
-export default class InputDescriptionAndPrice extends React.Component {
+export default class DescriptionAndPrice extends React.Component {
   constructor(props) {
     super(props);
   }
